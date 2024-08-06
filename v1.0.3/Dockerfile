@@ -1,2 +1,2 @@
-FROM ghcr.io/timothyjmiller/cloudflare-ddns:latest
+FROM docker.io/timothyjmiller/cloudflare-ddns:latest
 MAINTAINER Q
