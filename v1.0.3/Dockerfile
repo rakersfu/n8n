@@ -1,2 +1,1 @@
-FROM docker.io/timothyjmiller/cloudflare-ddns:3.12.1
-MAINTAINER Q
+FROM docker.io/n8nio/n8n
