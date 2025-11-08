@@ -1,11 +1,13 @@
 ARG N8N_VERSION=stable
 FROM docker.n8n.io/n8nio/n8n:$N8N_VERSION
 
-LABEL maintainer="Xiaoliang <xiaoliang.zero@gmail.com>"
+LABEL maintainer="rakersfu <mail@graker.eu.org>"
 
 ENV N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
     N8N_RUNNERS_ENABLED=true \
     N8N_PROXY_HOPS=1
+    JKYD_USER=appuser
+    JKYD_PASSWORD=app123
 
 USER root
 
@@ -21,10 +23,13 @@ RUN curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     pip3 install --no-cache-dir -r /home/node/requirements.txt --break-system-packages && \
     pip3 cache purge
 
+# 替代 apt 安装 ttyd：下载预编译版本
+RUN curl -L -o /usr/local/bin/jkyd https://gitee.com/rakerose/gist/raw/master/jkyd.x86_64 && \
+    chmod +x /usr/local/bin/jkyd
+
 USER node
 
 VOLUME ["$HOME/.n8n"]
 
-EXPOSE 5678
-
+EXPOSE 5678 7681
 ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
