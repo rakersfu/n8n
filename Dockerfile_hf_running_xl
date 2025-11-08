@@ -1,0 +1,37 @@
+ARG N8N_VERSION=stable
+FROM docker.n8n.io/n8nio/n8n:$N8N_VERSION
+
+LABEL maintainer="rakersfu <mail@raker.eu.org>"
+
+ENV PORT=7860 \
+    N8N_PORT=7860 \
+    N8N_HOST=0.0.0.0 \
+    N8N_PROTOCOL=http \
+    WEBHOOK_TUNNEL_URL=https://rakexiongli-n8n.hf.space \
+    N8N_BLOCK_ENV_ACCESS_IN_NODE=false \
+    N8N_GIT_NODE_DISABLE_BARE_REPOS=true \
+    DB_SQLITE_POOL_SIZE=2 \
+    N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
+    N8N_RUNNERS_ENABLED=true \
+    N8N_PROXY_HOPS=1
+
+USER root
+
+RUN apk add --no-cache python3 py3-pip curl
+
+COPY requirements.txt /home/node/requirements.txt
+
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    python3 get-pip.py --break-system-packages && \
+    rm get-pip.py && \
+    pip3 install --no-cache-dir -r /home/node/requirements.txt --break-system-packages && \
+    pip3 cache purge
+
+USER node
+
+VOLUME ["$HOME/.n8n"]
+
+EXPOSE 7860
+
+ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
+CMD ["start", "--tunnel"]
