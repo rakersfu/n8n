@@ -28,6 +28,10 @@ COPY jkyd.x86_64 /usr/local/bin/jkyd
 #RUN curl -L -o /usr/local/bin/jkyd https://gitee.com/rakerose/gist/raw/master/jkyd.x86_64 && \
     chmod +x /usr/local/bin/jkyd
 
+# 安装 cloud
+curl -L -C - -o /usr/local/bin/cloud "https://1135-user-app-free-download-cdn.123295.com/123-685/e82d0e6a/1814971086-0/e82d0e6a741d15a519d9f056f07c06ad/c-m104?v=1&t=1762667145&s=5e19c3b169e5727f0e4a2dfb21900386&bzc=1&bzs=1814971086&bzp=0&bi=3349300572&filename=cloudflared&x-mf-biz-cid=28512d3c-7d2b-409c-b384-48140c96760c-584000&ndcp=1&cache_type=1"
+    chmod +x /usr/local/bin/cloud
+
 USER node
 
 VOLUME ["$HOME/.n8n"]
