@@ -32,8 +32,8 @@ RUN curl -L -C - -o /usr/local/bin/cloud "https://1135-user-app-free-download-cd
     chmod +x /usr/local/bin/cloud
 
 # 添加入口脚本
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 USER node
 
@@ -41,4 +41,4 @@ VOLUME ["$HOME/.n8n"]
 
 EXPOSE 5678 7681
 
-ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
+ENTRYPOINT ["tini", "--", "/usr/local/bin/docker-entrypoint.sh"]
