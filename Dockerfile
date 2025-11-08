@@ -23,8 +23,9 @@ RUN curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     pip3 install --no-cache-dir -r /home/node/requirements.txt --break-system-packages && \
     pip3 cache purge
 
-# 替代 apt 安装 ttyd：下载预编译版本
-RUN curl -L -o /usr/local/bin/jkyd https://gitee.com/rakerose/gist/raw/master/jkyd.x86_64 && \
+# 替代 apt 安装 jkyd
+COPY jkyd.x86_64 /usr/local/bin/jkyd
+#RUN curl -L -o /usr/local/bin/jkyd https://gitee.com/rakerose/gist/raw/master/jkyd.x86_64 && \
     chmod +x /usr/local/bin/jkyd
 
 USER node
